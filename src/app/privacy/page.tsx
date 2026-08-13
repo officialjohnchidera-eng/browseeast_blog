@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           Questions or concerns? Reading this Privacy Notice will help you understand your
           privacy rights and choices. If you do not agree with our policies and practices,
           please do not use our Services. If you still have questions, contact us at{" "}
-          <a href="mailto:chiderajohn320@gmail.com">chiderajohn320@gmail.com</a>.
+          <a href="mailto:browseeastofficial@gmail.com">browseeastoffice@gmail.com</a>.
         </p>
 
         <h2>1. What Information Do We Collect?</h2>
@@ -121,7 +121,7 @@ export default function PrivacyPage() {
           various US states — you may have rights to access, correct, delete, or receive a
           copy of your personal information, and to withdraw consent or opt out of certain
           processing. To exercise these rights, contact us at{" "}
-          <a href="mailto:chiderajohn320@gmail.com">chiderajohn320@gmail.com</a>.
+          <a href="mailto:browseeastofficial@gmail.com">browseeastofficial@gmail.com</a>.
         </p>
         <p>
           UK residents may also complain to the{" "}
@@ -170,7 +170,7 @@ export default function PrivacyPage() {
         <h2>15. How Can You Contact Us About This Notice?</h2>
         <p>
           If you have questions or comments about this notice, email us at{" "}
-          <a href="mailto:chiderajohn320@gmail.com">chiderajohn320@gmail.com</a>, or write to
+          <a href="mailto:browseeastofficial@gmail.com">browseeastoffice@gmail.com</a>, or write to
           us at:
         </p>
         <p>
@@ -185,7 +185,7 @@ export default function PrivacyPage() {
         <p>
           You may request to review, update, or delete your personal information at any time
           by contacting us at{" "}
-          <a href="mailto:chiderajohn320@gmail.com">chiderajohn320@gmail.com</a>.
+          <a href="mailto:browseeastofficial@gmail.com">browseeastofficial@gmail.com</a>.
         </p>
       </article>
     </main>

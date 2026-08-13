@@ -23,7 +23,7 @@ export default function TermsPage() {
         </p>
         <p>
           You can contact us at{" "}
-          <a href="mailto:chiderajohn320@gmail.com">chiderajohn320@gmail.com</a> or by mail
+          <a href="mailto:browseeastofficial@gmail.com">browseeastofficial@gmail.com</a> or by mail
           at Festac Town, Lagos 102311, Nigeria.
         </p>
         <p>
@@ -121,7 +121,7 @@ export default function TermsPage() {
         <h2>12. Contact Us</h2>
         <p>
           Questions about these Terms can be directed to{" "}
-          <a href="mailto:chiderajohn320@gmail.com">chiderajohn320@gmail.com</a>.
+          <a href="mailto:browseeastofficial@gmail.com">browseeastofficial@gmail.com</a>.
         </p>
       </article>
     </main>

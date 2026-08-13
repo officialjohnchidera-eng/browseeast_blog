@@ -1,6 +1,18 @@
 import Link from "next/link";
+import { client } from "@/sanity/lib/client";
 
-export default function Footer() {
+type Category = {
+  title: string;
+  slug: { current: string };
+};
+
+async function getCategories(): Promise<Category[]> {
+  return client.fetch(`*[_type == "category"]{ title, slug }`);
+}
+
+export default async function Footer() {
+  const categories = await getCategories();
+
   return (
     <footer className="mt-auto bg-ink text-paper">
       <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -25,13 +37,18 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Categories placeholder */}
+        {/* Categories */}
         <div>
           <h4 className="font-mono text-xs uppercase tracking-wide text-paper/50 mb-3">Categories</h4>
-          <ul className="space-y-2 text-sm text-paper/80">
-            <li>Category One</li>
-            <li>Category Two</li>
-            <li>Category Three</li>
+          <ul className="space-y-2 text-sm">
+            {categories.length === 0 && (
+              <li className="text-paper/50">No categories yet</li>
+            )}
+            {categories.map((cat) => (
+              <li key={cat.slug.current}>
+                <span className="text-paper/80">{cat.title}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
