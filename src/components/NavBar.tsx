@@ -13,14 +13,14 @@ export default function Navbar() {
       <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image
-            src="/browseeast-logo.svg"
-            alt="BrowseEast"
-            width={168}
-            height={36}
-            priority
-          />
-        </Link>
+  <Image
+    src="/browseeast-logo.svg"
+    alt="BrowseEast"
+    width={280}
+    height={60}
+    priority
+  />
+</Link>
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-6 font-mono text-sm uppercase tracking-wide">
           <Link href="/blog" className="text-ink hover:text-petrol transition">
