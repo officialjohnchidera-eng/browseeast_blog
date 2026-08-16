@@ -16,8 +16,8 @@ export default function Navbar() {
   <Image
     src="/browseeast-logo.svg"
     alt="BrowseEast"
-    width={280}
-    height={60}
+    width={290}
+    height={68}
     priority
   />
 </Link>
