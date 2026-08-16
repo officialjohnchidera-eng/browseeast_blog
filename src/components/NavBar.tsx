@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, Search } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,14 +12,15 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-paper/95 backdrop-blur border-b border-mist">
       <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link
-          href="/"
-          className="font-display text-xl tracking-tight text-ink flex items-center gap-1"
-        >
-          <span className="text-brass">›</span>
-          BrowseEast
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/browseeast-logo.svg"
+            alt="BrowseEast"
+            width={168}
+            height={36}
+            priority
+          />
         </Link>
-
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-6 font-mono text-sm uppercase tracking-wide">
           <Link href="/blog" className="text-ink hover:text-petrol transition">
