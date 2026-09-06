@@ -63,6 +63,19 @@ function createPortableTextComponents(): PortableTextComponents {
         );
       },
     },
+    types: {
+      image: ({ value }) => (
+        <div className="relative w-full h-80 my-8 rounded-lg overflow-hidden">
+          <Image
+            src={urlFor(value).width(800).height(500).url()}
+            alt={value.alt || "Post image"}
+            fill
+            sizes="(max-width: 768px) 100vw, 768px"
+            className="object-cover"
+          />
+        </div>
+      ),
+    },
   };
 }
 

@@ -30,14 +30,12 @@ export default defineType({
       type: "reference",
       to: [{ type: "category" }],
     }),
-
     defineField({
       name: "author",
       title: "Author",
       type: "reference",
       to: [{ type: "author" }],
     }),
-
     defineField({
       name: "excerpt",
       title: "Excerpt",
@@ -53,7 +51,10 @@ export default defineType({
       name: "body",
       title: "Body",
       type: "array",
-      of: [{ type: "block" }],
+      of: [
+        { type: "block" },
+        { type: "image", options: { hotspot: true } },
+      ],
     }),
   ],
 });
