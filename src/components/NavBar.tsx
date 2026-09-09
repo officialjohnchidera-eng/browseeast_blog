@@ -1,5 +1,5 @@
 "use client";
-
+import ThemeToggle from "./ThemeToggle";
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, Search } from "lucide-react";
@@ -19,6 +19,7 @@ export default function Navbar() {
     width={290}
     height={68}
     priority
+    style={{ width: "auto", height: "auto" }}
   />
 </Link>
         {/* Desktop links */}
@@ -42,6 +43,7 @@ export default function Navbar() {
           >
             <Search size={18} />
           </Link>
+          <ThemeToggle />
         </div>
 
         {/* Mobile menu button */}

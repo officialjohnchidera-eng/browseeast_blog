@@ -1,5 +1,39 @@
+
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+
+@theme {
+  --color-ink: #1B2430;
+  --color-paper: #FAF7F0;
+  --color-petrol: #1F5C5C;
+  --color-brass: #C08A3E;
+  --color-mist: #E4DED0;
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+.dark {
+  --color-ink: #F4F1EA;
+  --color-paper: #14181F;
+  --color-petrol: #4DA3A3;
+  --color-brass: #E0AE5F;
+  --color-mist: #2A3340;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+
 
 @theme {
   --color-ink: #1B2430;

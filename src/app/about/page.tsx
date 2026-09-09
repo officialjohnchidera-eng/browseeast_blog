@@ -10,19 +10,26 @@ export default function AboutPage() {
     <main className="flex-1 max-w-3xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold">About BrowseEast</h1>
 
-      <div className="prose mt-6 text-gray-700">
-        <p>
-          Write a couple of paragraphs here about who you are, why you started
-          BrowseEast, and what readers can expect to find here. This page
-          matters more than it looks — it's one of the main trust signals
-          both for readers and for Google AdSense review.
-        </p>
-        <p>
-          A short personal note, your background, or the mission behind the
-          blog works well here. Adding a photo of yourself later also helps
-          build credibility.
-        </p>
-      </div>
+     <article className="prose prose-p:text-ink/80 prose-headings:font-display prose-headings:text-ink mt-6">
+  <p>
+    BrowseEast started as a simple idea: the internet is full of noise, but
+    genuinely useful writing is still out there if you know where to look.
+    This is a place to slow down and actually read — pieces on technology,
+    productivity, and the small cultural shifts that shape how we live and
+    work.
+  </p>
+  <p>
+    There's no single lane here. Some weeks it's a deep dive into a tool
+    worth using. Other weeks it's a reflection on a habit, a trend, or an
+    idea worth sitting with a little longer than a headline allows. The
+    thread connecting it all is curiosity — browsing outward, one honest
+    piece at a time.
+  </p>
+  <p>
+    If something here is useful, wrong, or worth arguing about, reach out —
+    the <a href="/contact">contact page</a> is always open.
+  </p>
+</article>
     </main>
   );
 }
