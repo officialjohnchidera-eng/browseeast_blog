@@ -13,15 +13,16 @@ export default function Navbar() {
       <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-  <Image
-    src="/browseeast-logo.svg"
-    alt="BrowseEast"
-    width={290}
-    height={68}
-    priority
-    style={{ width: "auto", height: "auto" }}
-  />
-</Link>
+          <Image
+            src="/browseeast-logo.svg"
+            alt="BrowseEast"
+            width={290}
+            height={68}
+            priority
+            style={{ width: "auto", height: "auto" }}
+          />
+        </Link>
+
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-6 font-mono text-sm uppercase tracking-wide">
           <Link href="/blog" className="text-ink hover:text-petrol transition">
@@ -80,6 +81,17 @@ export default function Navbar() {
           >
             Contact
           </Link>
+          <Link
+            href="/search"
+            className="text-ink"
+            onClick={() => setIsOpen(false)}
+          >
+            Search
+          </Link>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <span className="normal-case">Theme</span>
+          </div>
         </div>
       )}
     </header>

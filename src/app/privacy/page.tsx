@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           Questions or concerns? Reading this Privacy Notice will help you understand your
           privacy rights and choices. If you do not agree with our policies and practices,
           please do not use our Services. If you still have questions, contact us at{" "}
-          <a href="mailto:browseeastofficial@gmail.com">browseeastoffice@gmail.com</a>.
+          <a href="mailto:browseeastofficial@gmail.com">browseeastofficial@gmail.com</a>.
         </p>
 
         <h2>1. What Information Do We Collect?</h2>
