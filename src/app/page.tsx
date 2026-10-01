@@ -4,6 +4,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import AdUnit from "@/components/ads/AdUnit";
 import { AD_SLOTS } from "@/lib/ad-config";
+export const revalidate = 0;
 
 type Post = {
   _id: string;
