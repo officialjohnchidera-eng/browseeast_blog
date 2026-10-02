@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ShareButtons from "@/components/ShareButtons";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
@@ -140,6 +141,11 @@ export default async function SinglePostPage({
           <PortableText value={post.body} components={createPortableTextComponents()} />
         )}
       </article>
+
+      <ShareButtons
+        url={`https://browseeast-blog.vercel.app/blog/${slug}`}
+        title={post.title}
+      />
 
       {relatedPosts.length > 0 && (
         <section className="mt-16 pt-8 border-t border-mist">
