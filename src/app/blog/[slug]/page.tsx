@@ -1,189 +1,94 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import ShareButtons from "@/components/ShareButtons";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import { PortableText } from "@portabletext/react";
-import type { PortableTextComponents } from "@portabletext/react";
-import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
-import AdUnit from "@/components/ads/AdUnit";
-import { AD_SLOTS } from "@/lib/ad-config";
+"use client";
 
-type Post = {
+import { useState } from "react";
+import { Link2, Check } from "lucide-react";
+
+type ShareButtonsProps = {
+  url: string;
   title: string;
-  category?: string;
-  author?: { name: string; image?: any };
-  publishedAt?: string;
-  body?: any;
-  mainImage?: any;
 };
 
-async function getPost(slug: string): Promise<Post | null> {
-  return client.fetch(
-    `*[_type == "post" && slug.current == $slug][0]{
-      title, "category": category->title, "author": author->{name, image}, publishedAt, body, mainImage
-    }`,
-    { slug }
-  );
-}
+export default function ShareButtons({ url, title }: ShareButtonsProps) {
+  const [copied, setCopied] = useState(false);
 
-async function getRelatedPosts(category: string | undefined, currentSlug: string) {
-  if (!category) return [];
-  return client.fetch(
-    `*[_type == "post" && category->title == $category && slug.current != $currentSlug] | order(publishedAt desc)[0...3]{
-      _id, title, slug, excerpt, mainImage
-    }`,
-    { category, currentSlug }
-  );
-}
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${title} — ${url}`)}`;
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+  // Instagram has no web share-intent URL — see note below
+  const instagramUrl = `https://www.instagram.com/`;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const post = await getPost(slug);
-
-  if (!post) {
-    return { title: "Post Not Found | BrowseEast" };
+  function handleCopy() {
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }
 
-  return {
-    title: `${post.title} | BrowseEast`,
-    description: post.title,
-  };
-}
-
-// Closure-based counter — created fresh per render, avoids shared module-level state
-function createPortableTextComponents(): PortableTextComponents {
-  let blockCount = 0;
-
-  return {
-    block: {
-      normal: ({ children }) => {
-        blockCount++;
-        const showAd = blockCount % 3 === 0;
-
-        return (
-          <>
-            <p>{children}</p>
-            {showAd && <AdUnit slot={AD_SLOTS.inArticle} className="my-8" />}
-          </>
-        );
-      },
-    },
-    types: {
-      image: ({ value }) => {
-        if (!value?.asset?._ref) return null;
-
-        return (
-          <div className="relative w-full h-80 my-8 rounded-lg overflow-hidden">
-            <Image
-              src={urlFor(value).width(800).height(500).url()}
-              alt={value.alt || "Post image"}
-              fill
-              sizes="(max-width: 768px) 100vw, 768px"
-              className="object-cover"
-            />
-          </div>
-        );
-      },
-    },
-  };
-}
-
-export default async function SinglePostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const post = await getPost(slug);
-
-  if (!post) {
-    notFound();
-  }
-
-  const relatedPosts = await getRelatedPosts(post.category, slug);
+  const iconButtonClass =
+    "flex items-center justify-center w-9 h-9 rounded-full border border-mist text-ink/70 hover:border-petrol hover:text-petrol transition";
 
   return (
-    <main className="flex-1 max-w-3xl mx-auto px-4 py-16">
-      <Link
-        href="/blog"
-        className="font-mono text-xs uppercase tracking-wide text-petrol hover:text-brass transition"
-      >
-        ← Back to Blog
-      </Link>
-
-      <span className="block font-mono text-xs text-ink/50 mt-8">
-        {post.category} · {post.publishedAt?.slice(0, 10)}
-        {post.author?.name && ` · By ${post.author.name}`}
+    <div className="flex items-center gap-3 mt-8">
+      <span className="font-mono text-xs uppercase tracking-wide text-ink/50">
+        Share
       </span>
 
-      <h1 className="font-display text-4xl text-ink mt-2">{post.title}</h1>
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Share on WhatsApp"
+        className={iconButtonClass}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.07c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.94-.3-1.62-.59-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94 0-1.4.73-2.09.99-2.37.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.17.01.41-.07.64.49.24.57.81 1.97.88 2.11.07.14.12.3.02.49-.1.19-.15.3-.29.46-.14.17-.3.37-.43.5-.14.14-.29.29-.12.57.17.28.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.34 1.46.28.14.44.12.6-.07.17-.19.72-.84.91-1.13.19-.28.38-.23.63-.14.26.1 1.64.77 1.92.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z"/>
+        </svg>
+      </a>
 
-      {post.mainImage && (
-        <div className="relative w-full h-72 mt-8 rounded-lg overflow-hidden">
-          <Image
-            src={urlFor(post.mainImage).width(800).height(450).url()}
-            alt={post.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 768px"
-            className="object-cover"
-          />
-        </div>
-      )}
+      <a
+        href={twitterUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Share on X"
+        className={iconButtonClass}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.9 2H22l-7.6 8.7L23.3 22H16.6l-5.2-6.8L5.3 22H2.2l8.1-9.3L1.3 2h6.9l4.7 6.2L18.9 2zm-1.2 18h1.7L7.1 4H5.3l12.4 16z"/>
+        </svg>
+      </a>
 
-      <article className="prose prose-p:text-ink/80 prose-headings:font-display prose-headings:text-ink mt-8">
-        {post.body && (
-          <PortableText value={post.body} components={createPortableTextComponents()} />
-        )}
-      </article>
+      <a
+        href={facebookUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Share on Facebook"
+        className={iconButtonClass}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M13.5 9H15V6h-2.5C10.57 6 9 7.57 9 9.5V11H7v3h2v7h3v-7h2.1l.4-3H12V9.5c0-.28.22-.5.5-.5z"/>
+        </svg>
+      </a>
 
-      <ShareButtons
-        url={`https://browseeast-blog.vercel.app/blog/${slug}`}
-        title={post.title}
-      />
+      <a
+        href={instagramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="BrowseEast on Instagram"
+        className={iconButtonClass}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="3" y="3" width="18" height="18" rx="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      </a>
 
-      {relatedPosts.length > 0 && (
-        <section className="mt-16 pt-8 border-t border-mist">
-          <h2 className="font-mono text-xs uppercase tracking-wide text-ink/50 mb-6">
-            Related Posts
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {relatedPosts.map((rp: any) => (
-              <Link
-                key={rp._id}
-                href={`/blog/${rp.slug.current}`}
-                className="group block rounded-xl overflow-hidden border border-mist hover:shadow-md transition"
-              >
-                <div className="relative w-full h-32 bg-mist overflow-hidden">
-                  {rp.mainImage ? (
-                    <Image
-                      src={urlFor(rp.mainImage).width(300).height(180).url()}
-                      alt={rp.title}
-                      fill
-                      sizes="300px"
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <span className="font-display text-xl text-ink/20">›</span>
-                    </div>
-                  )}
-                </div>
-                <div className="p-3">
-                  <h3 className="font-display text-sm text-ink group-hover:text-petrol transition-colors">
-                    {rp.title}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-    </main>
+      <button
+        onClick={handleCopy}
+        aria-label="Copy link"
+        className={iconButtonClass}
+      >
+        {copied ? <Check size={16} /> : <Link2 size={16} />}
+      </button>
+    </div>
   );
 }
