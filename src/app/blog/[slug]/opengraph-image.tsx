@@ -4,10 +4,16 @@ import { client } from "@/sanity/lib/client";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default async function Image({ params }: { params: { slug: string } }) {
+export default async function Image({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
   const post = await client.fetch(
     `*[_type == "post" && slug.current == $slug][0]{ title, "category": category->title }`,
-    { slug: params.slug }
+    { slug }
   );
 
   return new ImageResponse(
