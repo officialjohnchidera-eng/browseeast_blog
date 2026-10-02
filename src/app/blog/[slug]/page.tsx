@@ -27,6 +27,16 @@ async function getPost(slug: string): Promise<Post | null> {
   );
 }
 
+async function getRelatedPosts(category: string | undefined, currentSlug: string) {
+  if (!category) return [];
+  return client.fetch(
+    `*[_type == "post" && category->title == $category && slug.current != $currentSlug] | order(publishedAt desc)[0...3]{
+      _id, title, slug, excerpt, mainImage
+    }`,
+    { category, currentSlug }
+  );
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -95,6 +105,8 @@ export default async function SinglePostPage({
     notFound();
   }
 
+  const relatedPosts = await getRelatedPosts(post.category, slug);
+
   return (
     <main className="flex-1 max-w-3xl mx-auto px-4 py-16">
       <Link
@@ -128,6 +140,44 @@ export default async function SinglePostPage({
           <PortableText value={post.body} components={createPortableTextComponents()} />
         )}
       </article>
+
+      {relatedPosts.length > 0 && (
+        <section className="mt-16 pt-8 border-t border-mist">
+          <h2 className="font-mono text-xs uppercase tracking-wide text-ink/50 mb-6">
+            Related Posts
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedPosts.map((rp: any) => (
+              <Link
+                key={rp._id}
+                href={`/blog/${rp.slug.current}`}
+                className="group block rounded-xl overflow-hidden border border-mist hover:shadow-md transition"
+              >
+                <div className="relative w-full h-32 bg-mist overflow-hidden">
+                  {rp.mainImage ? (
+                    <Image
+                      src={urlFor(rp.mainImage).width(300).height(180).url()}
+                      alt={rp.title}
+                      fill
+                      sizes="300px"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="font-display text-xl text-ink/20">›</span>
+                    </div>
+                  )}
+                </div>
+                <div className="p-3">
+                  <h3 className="font-display text-sm text-ink group-hover:text-petrol transition-colors">
+                    {rp.title}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }
