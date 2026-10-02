@@ -14,7 +14,6 @@ export default function ShareButtons({ url, title }: ShareButtonsProps) {
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${title} — ${url}`)}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-  // Instagram has no web share-intent URL — see note below
   const instagramUrl = `https://www.instagram.com/`;
 
   function handleCopy() {
@@ -24,10 +23,10 @@ export default function ShareButtons({ url, title }: ShareButtonsProps) {
   }
 
   const iconButtonClass =
-    "flex items-center justify-center w-9 h-9 rounded-full border border-mist text-ink/70 hover:border-petrol hover:text-petrol transition";
+    "flex items-center justify-center w-9 h-9 rounded-full border border-mist text-ink/70 hover:border-petrol hover:text-petrol transition dark:text-ink/90 dark:hover:text-brass dark:hover:border-brass";
 
   return (
-    <div className="flex items-center gap-3 mt-8">
+    <div className="flex items-center gap-3 mt-8 pt-6 border-t border-mist">
       <span className="font-mono text-xs uppercase tracking-wide text-ink/50">
         Share
       </span>
